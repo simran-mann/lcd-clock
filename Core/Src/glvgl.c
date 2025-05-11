@@ -52,7 +52,7 @@ void Lvgl_btn_style_init(Lvgl* const me) {
 
 void Lvgl_main_page_set_style(Lvgl* const me)
 {
-    lv_obj_set_style_bg_color(me->screen, lv_palette_main(LV_PALETTE_PINK), LV_PART_MAIN);
+    lv_obj_set_style_bg_color(me->screen, lv_palette_main(LV_PALETTE_BLUE_GREY), LV_PART_MAIN);
 
     /*Clock*/
     lv_obj_set_style_text_font(me->clock, &lv_font_montserrat_40, LV_PART_MAIN);
