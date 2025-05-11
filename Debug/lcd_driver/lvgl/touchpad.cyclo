@@ -1,0 +1,2 @@
+../lcd_driver/lvgl/touchpad.c:42:6:touchpad_init	1
+../lcd_driver/lvgl/touchpad.c:56:13:touchpad_read	2

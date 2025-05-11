@@ -1,0 +1,9 @@
+../lcd_driver/tsc/XPT2046.c:58:9:xpt2046_xchg_value	1
+../lcd_driver/tsc/XPT2046.c:65:6:xpt2046_cs	2
+../lcd_driver/tsc/XPT2046.c:112:6:HAL_SPI_MspInit	2
+../lcd_driver/tsc/XPT2046.c:148:13:MX_SPI1_Init	2
+../lcd_driver/tsc/XPT2046.c:184:6:xpt2046_init	1
+../lcd_driver/tsc/XPT2046.c:209:9:xpt2046_irq_pin_read	1
+../lcd_driver/tsc/XPT2046.c:220:6:xpt2046_read	2
+../lcd_driver/tsc/XPT2046.c:275:13:xpt2046_corr	3
+../lcd_driver/tsc/XPT2046.c:312:13:xpt2046_avg	4
