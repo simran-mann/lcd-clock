@@ -7,7 +7,7 @@
  *      INCLUDES
  *********************/
 #include "tft.h"
-#include "lvgl.h"
+#include "lvgl/lvgl.h"
 
 #include "stm32f4xx.h"
 #include "XPT2046.h"

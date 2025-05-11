@@ -264,6 +264,8 @@ void ClockUI_init(ClockUI* const clk) {
     ClockUI_update_current_date(clk);
 }
 
+
+
 static uint32_t convert_24hformat_to_12h(uint32_t time24h) {
     uint8_t hour;
     uint32_t time12h;
