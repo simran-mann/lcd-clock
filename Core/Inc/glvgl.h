@@ -19,7 +19,7 @@
 /*.$endhead${.::glvgl.h} ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 #ifndef GLVGL_H
 #define GLVGL_H
-#include "lvgl.h"
+#include "lvgl/lvgl.h"
 
 #ifdef __cplusplus
 extern "C"{

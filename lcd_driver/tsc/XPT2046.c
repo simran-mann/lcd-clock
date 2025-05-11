@@ -6,9 +6,9 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "XPT2046.h"
+#include <lcd_driver/lvgl/tft.h>
+#include <lcd_driver/tsc/XPT2046.h>
 #include "stm32f4xx.h"
-#include "tft.h"
 
 #if USE_XPT2046
 

@@ -9,9 +9,9 @@
 /*********************
  *      INCLUDES
  *********************/
+#include <lcd_driver/lcd/bsp_lcd.h>
 #include <stdint.h>
-#include "lvgl.h"
-#include "bsp_lcd.h"
+#include "lvgl/lvgl.h"
 
 /*********************
  *      DEFINES

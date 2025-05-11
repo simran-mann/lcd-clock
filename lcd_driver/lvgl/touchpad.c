@@ -6,11 +6,11 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "tft.h"
+#include <lcd_driver/lvgl/tft.h>
+#include <lcd_driver/tsc/XPT2046.h>
 #include "lvgl/lvgl.h"
 
 #include "stm32f4xx.h"
-#include "XPT2046.h"
 
 /*********************
  *      DEFINES
@@ -55,6 +55,7 @@ void touchpad_init(void)
 
 static bool touchpad_read(lv_indev_drv_t * drv, lv_indev_data_t *data)
 {
+	printf("touchpad read clalled ..\n");
 static int16_t last_x = 0;
 static int16_t last_y = 0;
 

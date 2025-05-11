@@ -6,7 +6,7 @@
  */
 
 
-#include "bsp_lcd.h"
+#include <lcd_driver/lcd/bsp_lcd.h>
 
  bsp_lcd_t lcd_handle;
 

@@ -82,10 +82,6 @@ RM := rm -rf
 -include lcd_driver/tsc/subdir.mk
 -include lcd_driver/lvgl/subdir.mk
 -include lcd_driver/lcd/subdir.mk
--include USB_HOST/Target/subdir.mk
--include USB_HOST/App/subdir.mk
--include Middlewares/ST/STM32_USB_Host_Library/Core/Src/subdir.mk
--include Middlewares/ST/STM32_USB_Host_Library/Class/CDC/Src/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
@@ -111,34 +107,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := clock_display
+BUILD_ARTIFACT_NAME := ClockAlarmUI
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-clock_display.elf \
+ClockAlarmUI.elf \
 
 MAP_FILES += \
-clock_display.map \
+ClockAlarmUI.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-clock_display.list \
+ClockAlarmUI.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: clock_display.elf secondary-outputs
+main-build: ClockAlarmUI.elf secondary-outputs
 
 # Tool invocations
-clock_display.elf clock_display.map: $(OBJS) $(USER_OBJS) /Users/simranmann/Desktop/STM32/clock_display/STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "clock_display.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/simranmann/Desktop/STM32/clock_display/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="clock_display.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+ClockAlarmUI.elf ClockAlarmUI.map: $(OBJS) $(USER_OBJS) /Users/simranmann/Desktop/STM32/EmbeddedGraphicsLVGL-MCU3-main/Projects/004_ClockAlarmUI/3_32F407DISCOVERY/STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "ClockAlarmUI.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/simranmann/Desktop/STM32/EmbeddedGraphicsLVGL-MCU3-main/Projects/004_ClockAlarmUI/3_32F407DISCOVERY/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="ClockAlarmUI.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -147,14 +143,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-clock_display.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "clock_display.list"
+ClockAlarmUI.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "ClockAlarmUI.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) clock_display.elf clock_display.list clock_display.map default.size.stdout
+	-$(RM) ClockAlarmUI.elf ClockAlarmUI.list ClockAlarmUI.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

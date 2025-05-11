@@ -1,11 +1,4 @@
-/*
- * clock.h
- *
- *  Created on: May 1, 2025
- *      Author: simranmann
- */
-
-
+﻿
 #ifndef CLOCK_H
 #define CLOCK_H
 #include<stdint.h>
@@ -18,8 +11,11 @@ typedef struct {
     uint16_t year;
 }date_t;
 
+enum {
+    ALARM_ON,
+    ALARM_OFF
+};
 
-//What the current clock time will start at; the times are stored in seconds
 #define MONDAY 1
 #define MAY  5
 #define MAX_TIME  (864000UL)
@@ -29,6 +25,7 @@ typedef struct {
 #define INITIAL_MONTH  MAY
 #define INITIAL_YEAR  2025ul
 #define INITIAL_DATE  5
+#define INITIAL_ALARM_STATUS ALARM_ON
 #define BASE_YEAR 2000
 
 typedef enum time_mode {
@@ -36,7 +33,8 @@ typedef enum time_mode {
     MODE_12H
 }time_mode_t;
 
-typedef enum time_format_t{
+typedef enum time_format{
+    FORMAT_24H,
     FORMAT_AM,
     FORMAT_PM
 }time_format_t;
@@ -47,24 +45,24 @@ extern "C"{
 
 typedef struct {
     uint32_t time_now;
-    uint32_t alarm_time;//not imepltemted yet
+    uint32_t alarm_time;
     uint8_t time_format;
     uint8_t alarm_time_format;
-//    uint8_t alarm_status; //not imepetmed yet
+    uint8_t alarm_status;
     uint8_t time_mode;
     date_t date_now;
 } Clock;
 
-void Clock_update_current_time(Clock * const clk);
-bool Clock_alarm_on_or_off(Clock *const clk);//is_alarm
-uint32_t Clock_get_current_time(Clock * const clk);
-uint8_t Clock_get_time_mode(Clock * const clk);
-void Clock_set_current_time(Clock * const clk, uint32_t new_time);
-void Clock_set_alarm_time(Clock* const clk, uint32_t new_time);
-void Clock_set_date(Clock * const clk, date_t *const  new_date);
-void Clock_get_date(Clock * const clk, date_t *const pdate);
+void Clock_update_current_time(Clock * const me);
+bool Clock_is_alarm(Clock *const me);
+uint32_t Clock_get_current_time(Clock * const me);
+uint8_t Clock_get_time_mode(Clock * const me);
+void Clock_set_current_time(Clock * const me, uint32_t new_time);
+void Clock_set_alarm_time(Clock* const me, uint32_t new_time);
+void Clock_set_date(Clock * const me, date_t *const  new_date);
+void Clock_get_date(Clock * const me, date_t *const pdate);
 uint8_t Clock_get_am_or_pm(uint32_t time24h);
-void Clock_init(Clock *const clk);
+void Clock_ctor(Clock *const me);
 #ifdef __cplusplus
 }
 #endif

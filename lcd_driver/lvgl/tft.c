@@ -6,13 +6,13 @@
 /*********************
  *      INCLUDES
  *********************/
+#include <lcd_driver/lcd/bsp_lcd.h>
+#include <lcd_driver/lvgl/tft.h>
 #include "lv_conf.h"
-#include "lvgl.h"
+#include "lvgl/lvgl.h"
 #include <string.h>
 
-#include "tft.h"
 #include "stm32f4xx.h"
-#include "bsp_lcd.h"
 
 
 extern  bsp_lcd_t lcd_handle;

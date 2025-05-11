@@ -1,5 +1,5 @@
-﻿#include "lvgl.h"
-#include "ClockUI.h"
+﻿#include "lvgl/lvgl.h"
+#include "ClockAlarmUI.h"
 #include "glvgl_widget.h"
 #include <stdlib.h>
 
@@ -149,8 +149,8 @@ lv_obj_t* widget_create_roller(lv_obj_t* parent, const char* opts, int active_id
     lv_obj_t* menu = lv_event_get_user_data(e);
     if (lv_menu_back_btn_is_root(menu, obj)) {
         UI_event_t event;
-        event.event = E_ROOT_BACK;
-        ClockUI_process_event(&ClockUI_inst,&event);
+        event.sig = E_ROOT_BACK;
+        ClockAlarmUI_process_event(&ClockAlarmUI_inst,&event);
     }
 }
 
@@ -176,17 +176,17 @@ lv_obj_t* widget_create_roller(lv_obj_t* parent, const char* opts, int active_id
 
     LV_LOG_USER("Selected radio buttons: %d, %d", (int)*active_id, (int)old_id );
     if (data->setting_type == SETTING_TIME) {
-            event.super.event = E_SETTING_CLOCK_FORMAT;
+            event.super.sig = E_SETTING_CLOCK_FORMAT;
     }
     else if (data->setting_type == SETTING_ALARM) {
-            event.super.event = E_SETTING_ALARM_FORMAT;
+            event.super.sig = E_SETTING_ALARM_FORMAT;
     }
     else {
-        event.super.event = E_NONE;
+        event.super.sig = E_NONE;
     }
 
     event.param = *active_id;
-    ClockUI_process_event(&ClockUI_inst,&event.super);
+    ClockAlarmUI_process_event(&ClockAlarmUI_inst,&event.super);
 }
 
 static void delete_dropdwn_list(Lvgl* lvgl_inst)
@@ -215,8 +215,8 @@ static void delete_dropdwn_list(Lvgl* lvgl_inst)
     lv_event_code_t code = lv_event_get_code(e);
     if (code == LV_EVENT_CLICKED) {
         UI_event_t event;
-        event.event = E_SETTING;
-        ClockUI_process_event(&ClockUI_inst, &event);
+        event.sig = E_SETTING;
+        ClockAlarmUI_process_event(&ClockAlarmUI_inst, &event);
     }
 }
 
@@ -226,7 +226,7 @@ static void delete_dropdwn_list(Lvgl* lvgl_inst)
     Lvgl* const lvgl_inst = (Lvgl*)lv_event_get_user_data(e);
     delete_dropdwn_list(lvgl_inst);
     if (code == LV_EVENT_CLICKED) {
-        lv_obj_t* mbox1 = lv_msgbox_create(NULL, "About", "Clock version: 1.0\nBy FastBit EBA\nPowered by LVGL v8.3", NULL, true);
+        lv_obj_t* mbox1 = lv_msgbox_create(NULL, "About", "Clock version: 1.0\nCreated using LVGL Embedded Graphics Library", NULL, true);
         lv_obj_center(mbox1);
     }
 }
@@ -259,9 +259,9 @@ static void delete_dropdwn_list(Lvgl* lvgl_inst)
          mbox = lv_event_get_current_target(e);
          int btn_id = lv_msgbox_get_active_btn(mbox);
          lv_msgbox_close(mbox);
-         event.super.event = E_SETTING_SAVE_YES_OR_NO;
+         event.super.sig = E_SETTING_SAVE_YES_NO;
          event.param = btn_id;
-         ClockUI_process_event(&ClockUI_inst, &event.super);
+         ClockAlarmUI_process_event(&ClockAlarmUI_inst, &event.super);
      }
  }
 
@@ -278,11 +278,11 @@ static void delete_dropdwn_list(Lvgl* lvgl_inst)
              lv_btnmatrix_clear_btn_ctrl_all(calendar->btnm, LV_BTNMATRIX_CTRL_CUSTOM_2);
              lv_btnmatrix_set_btn_ctrl(calendar->btnm, i, LV_BTNMATRIX_CTRL_CUSTOM_2);
              LV_LOG_USER("Clicked date: %02d.%02d.%d %d", date.day, date.month, date.year, i);
-             event.super.event = E_SETTING_DATE_CHANGE;
+             event.super.sig = E_SETTING_DATE_CHANGE;
              event.date = date.day;
              event.month = date.month;
              event.year = date.year;
-             ClockUI_process_event(&ClockUI_inst, &event.super);
+             ClockAlarmUI_process_event(&ClockAlarmUI_inst, &event.super);
          }
      }
  }
@@ -311,9 +311,9 @@ static void delete_dropdwn_list(Lvgl* lvgl_inst)
         }
         else
             sig = E_NONE;
-        event.super.event = sig;
+        event.super.sig = sig;
         event.param = roller_value;
-        ClockUI_process_event(&ClockUI_inst, &event.super);
+        ClockAlarmUI_process_event(&ClockAlarmUI_inst, &event.super);
         
      }
  }
@@ -337,9 +337,9 @@ static void delete_dropdwn_list(Lvgl* lvgl_inst)
              }
              else
                  sig = E_NONE;
-             event.super.event = sig;
+             event.super.sig = sig;
              event.param = roller_value;
-             ClockUI_process_event(&ClockUI_inst, &event.super);
+             ClockAlarmUI_process_event(&ClockAlarmUI_inst, &event.super);
          
 
      }
@@ -351,8 +351,8 @@ static void delete_dropdwn_list(Lvgl* lvgl_inst)
      lv_event_code_t code = lv_event_get_code(e);
      lv_obj_t* obj = lv_event_get_target(e);
      if (code == LV_EVENT_CLICKED) {
-         event.event= E_DATE_SAVE;
-         ClockUI_process_event(&ClockUI_inst, &event);
+         event.sig = E_DATE_SAVE;
+         ClockAlarmUI_process_event(&ClockAlarmUI_inst, &event);
      }
      UNUSED(obj);
  }
@@ -364,8 +364,8 @@ static void delete_dropdwn_list(Lvgl* lvgl_inst)
      lv_event_code_t code = lv_event_get_code(e);
      lv_obj_t* obj = lv_event_get_target(e);
      if (code == LV_EVENT_CLICKED) {
-         event.event = E_CLOCK_SAVE;
-         ClockUI_process_event(&ClockUI_inst, &event);
+         event.sig = E_CLOCK_SAVE;
+         ClockAlarmUI_process_event(&ClockAlarmUI_inst, &event);
      }
      UNUSED(obj);
  }
@@ -377,8 +377,8 @@ static void delete_dropdwn_list(Lvgl* lvgl_inst)
      lv_event_code_t code = lv_event_get_code(e);
      lv_obj_t* obj = lv_event_get_target(e);
      if (code == LV_EVENT_CLICKED) {
-         event.event= E_ALARM_SAVE;
-         ClockUI_process_event(&ClockUI_inst, &event);
+         event.sig = E_ALARM_SAVE;
+         ClockAlarmUI_process_event(&ClockAlarmUI_inst, &event);
      }
      UNUSED(obj);
  }
@@ -395,7 +395,7 @@ static void delete_dropdwn_list(Lvgl* lvgl_inst)
      lv_obj_t* obj = lv_event_get_target(e);
      UI_time_change_event_t event;
      bool state = lv_obj_has_state(obj, LV_STATE_CHECKED);
-     event.super.event = E_SETTING_CLOCK_MODE;
+     event.super.sig = E_SETTING_CLOCK_MODE;
      if (state) {
          //24h
          event.param = MODE_24H;
@@ -404,42 +404,42 @@ static void delete_dropdwn_list(Lvgl* lvgl_inst)
          //12h
          event.param = MODE_12H;
      }
-     ClockUI_process_event(&ClockUI_inst, &event.super);
+     ClockAlarmUI_process_event(&ClockAlarmUI_inst, &event.super);
 
      UNUSED(code);
  }
 
-// void event_handler_switch_alarm(lv_event_t* e)
-// {
-//     lv_event_code_t code = lv_event_get_code(e);
-//     lv_obj_t* obj = lv_event_get_target(e);
-//     UI_time_change_event_t event;
-//     bool state = lv_obj_has_state(obj, LV_STATE_CHECKED);
-//     event.super.event = E_ALARM_ON_OFF;
-//     lv_obj_t* label = lv_event_get_user_data(e);
-//     if (state) {
-//         //alarm on
-//         lv_label_set_text(label, "Alarm:ON");
-//         event.param = ALARM_ON;
-//     }
-//     else {
-//         //alarm off
-//         lv_label_set_text(label, "Alarm:OFF");
-//         event.param = ALARM_OFF;
-//     }
-//     ClockUI_process_event(&ClockUI_inst, &event.super);
-//     UNUSED(code);
-// }
-//
-//
-// void event_handler_alarm_notif_close(lv_event_t* e)
-// {
-//     UI_event_t event;
-//     lv_event_code_t code = lv_event_get_code(e);
-//     lv_obj_t* obj = lv_event_get_target(e);
-//     if (code == LV_EVENT_CLICKED) {
-//         event.sig = E_ALARM_NOTIF_CLOSE;
-//         ClockUI_process_event(&ClockUI_inst, &event);
-//     }
-//     UNUSED(obj);
-// }
+ void event_handler_switch_alarm(lv_event_t* e)
+ {
+     lv_event_code_t code = lv_event_get_code(e);
+     lv_obj_t* obj = lv_event_get_target(e);
+     UI_time_change_event_t event;
+     bool state = lv_obj_has_state(obj, LV_STATE_CHECKED);
+     event.super.sig = E_ALARM_ON_OFF;
+     lv_obj_t* label = lv_event_get_user_data(e);
+     if (state) {
+         //alarm on 
+         lv_label_set_text(label, "Alarm:ON");
+         event.param = ALARM_ON;
+     }
+     else {
+         //alarm off
+         lv_label_set_text(label, "Alarm:OFF");
+         event.param = ALARM_OFF;
+     }
+     ClockAlarmUI_process_event(&ClockAlarmUI_inst, &event.super);
+     UNUSED(code);
+ }
+
+
+ void event_handler_alarm_notif_close(lv_event_t* e)
+ {
+     UI_event_t event;
+     lv_event_code_t code = lv_event_get_code(e);
+     lv_obj_t* obj = lv_event_get_target(e);
+     if (code == LV_EVENT_CLICKED) {
+         event.sig = E_ALARM_NOTIF_CLOSE;
+         ClockAlarmUI_process_event(&ClockAlarmUI_inst, &event);
+     }
+     UNUSED(obj);
+ }

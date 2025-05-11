@@ -1,6 +1,6 @@
 ﻿#include "glvgl.h"
-#include "lvgl.h"
-#include "ClockUI.h"
+#include "lvgl/lvgl.h"
+#include "ClockAlarmUI.h"
 #include "glvgl_widget.h"
 #include <stdio.h>
 
@@ -133,20 +133,20 @@ void Lvgl_style_init(Lvgl* const me)
     Lvgl_btn_style_init(me);
 }
 
-void Lvgl_create_alarm_notif_page(Lvgl* const me, lvgl_alarm_page_data_t *data) {
-
-    create_time_date_header(me);
-
-    LV_IMG_DECLARE(alarm_gif_new);
-    lv_obj_t* img;
-    img = lv_gif_create(me->screen);
-    lv_gif_set_src(img, &alarm_gif_new);
-    lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
-
-    lv_obj_t* close_btn = widget_create_button(me->screen, "Close", &me->style_btn_normal, &me->style_btn_clicked, event_handler_alarm_notif_close);
-    lv_obj_align_to(close_btn,img,LV_ALIGN_OUT_BOTTOM_MID,0,10);
-}
-
+//void Lvgl_create_alarm_notif_page(Lvgl* const me, lvgl_alarm_page_data_t *data) {
+//
+//    create_time_date_header(me);
+//
+//    LV_IMG_DECLARE(alarm_gif_new);
+//    lv_obj_t* img;
+//    img = lv_gif_create(me->screen);
+//    lv_gif_set_src(img, &alarm_gif_new);
+//    lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
+//
+//    lv_obj_t* close_btn = widget_create_button(me->screen, "Close", &me->style_btn_normal, &me->style_btn_clicked, event_handler_alarm_notif_close);
+//    lv_obj_align_to(close_btn,img,LV_ALIGN_OUT_BOTTOM_MID,0,10);
+//}
+//
 
 
 void Lvgl_create_setting_page(Lvgl * const me, lvgl_setting_page_data_t* data) {
@@ -244,17 +244,17 @@ void Lvgl_create_setting_page(Lvgl * const me, lvgl_setting_page_data_t* data) {
 
     char* status;
     bool alarm_check;
-//    if (data->alarm_status == ALARM_ON) {
-//        status = "Alarm:ON";
-//        alarm_check = true;
-//    }
-//    else {
-//        status = "Alarm:OFF";
-//        alarm_check = false;
-//    }
+    if (data->alarm_status == ALARM_ON) {
+        status = "Alarm:ON";
+        alarm_check = true;
+    }
+    else {
+        status = "Alarm:OFF";
+        alarm_check = false;
+    }
     lv_menu_separator_create(alarm_page);
     section = lv_menu_section_create(alarm_page);
-//    widget_create_switch(section, LV_SYMBOL_BELL, status, alarm_check,event_handler_switch_alarm);
+    widget_create_switch(section, LV_SYMBOL_BELL, status, alarm_check,event_handler_switch_alarm);
 
     lv_menu_separator_create(alarm_page);
     widget_create_button(alarm_page, "Save", &me->style_btn_normal, &me->style_btn_clicked,event_handler_alarm_save);

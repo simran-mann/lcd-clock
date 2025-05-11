@@ -17,9 +17,9 @@ extern "C" {
  *********************/
 #ifndef LV_DRV_NO_CONF
 #ifdef LV_CONF_INCLUDE_SIMPLE
-#include "lv_drv_conf.h"
+#include <lcd_driver/lvgl/lv_drv_conf.h>
 #else
-#include "lv_drv_conf.h"
+#include <lcd_driver/lvgl/lv_drv_conf.h>
 #endif
 #endif
 
